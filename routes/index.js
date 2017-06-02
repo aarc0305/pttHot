@@ -15,7 +15,7 @@ router.get('/pttStat',function(req,res,next){
 
 router.get('/postOne',function(res,res,next){
 	var newStat = new pttStat();
-	newStat.word = 'hello';
+	newStat.word = 'helloPtt';
 	newStat.number = 12;
 	newStat.save(function(err,stat){
 	    if(err){
@@ -25,6 +25,20 @@ router.get('/postOne',function(res,res,next){
 	    console.log(stat);
 	    console.log('成功存入');
 	 });
+});
+
+router.get('/postChinese',function(res,res,next){
+        var newStat = new pttStat();
+        newStat.word = '歡迎';
+        newStat.number = 12;
+        newStat.save(function(err,stat){
+            if(err){
+              console.log('無法存入');
+              return;
+            }
+            console.log(stat);
+            console.log('成功存入');
+         });
 });
 
 module.exports = router;
