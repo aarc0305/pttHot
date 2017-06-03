@@ -7,9 +7,13 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/ptt', function(req, res, next) {
+  res.render('ptt', { title: 'Express' });
+});
+
 router.get('/pttStat',function(req,res,next){
 	pttStat.find(function(err, stats){
-		res.json(stats[0]);
+		res.json(stats);
 	});
 });
 
