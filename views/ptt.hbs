@@ -7,21 +7,74 @@
 		<script type="text/javascript" src="/javascripts/d3.layout.cloud.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 	</head>
-	<body>
-		<div class = "col-md-4"></div>
-		<div class = "col-md-4">
-			<div ng-app="myApp" ng-controller="myCtrl">
-				<h1>{{myWelcome}}</h1>
-				<div id="tag" style="border: 0px solid #000; height: 500px; width: 500px;">
-				</div>
+	<body ng-app="pttApp" ng-controller="listCtrl" ng-init="init()" style="font-family: Microsoft JhengHei;">
+		<nav class="navbar navbar-inverse" style="margin-bottom:0px">
+		<div class="container-fluid">
+		  <div class="navbar-header">
+		    <a class="navbar-brand" href="#">PTT Popular</a>
+		  </div>
+		  <ul class="nav navbar-nav">
+		    <li class="active"><a href="#">Home</a></li>
+		    
+		  </ul>
+		</div>
+		</nav>
+		<div class="container">
+		<div class="container">
+			<div class="jumbotron" style="height:300px">
+			  <h1>PTT趨勢</h1>
+			  <br>      
+			  <button type="button" class="btn btn-primary" ng-click="startWordCloud()">文字雲模式</button>
+			  <button type="button" class="btn btn-primary" ng-click="startTable()">表格模式</button>
 			</div>
 		</div>
-		<div class = "col-md-4"></div>
+		<div class="container" >
+			<div class="container" ng-show="showTable">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-6">
+				  <h2>五月份趨勢</h2>
+				  <ul class="list-group">
+				    <li class="list-group-item">New <span class="badge">12</span></li>
+				    <li class="list-group-item">Deleted <span class="badge">5</span></li>
+				    <li class="list-group-item">Warnings <span class="badge">3</span></li>
+				  </ul> 
+				</div>
+				<div class="col-sm-3"></div>
+			</div>
+		    <div class="container" ng-show="showWordCloud">
+				<div class = "col-md-4"></div>
+				<div class = "col-md-4">
+					<div ng-controller="myCtrl">
+						<h2>五月份趨勢</h2>
+						<div id="tag" style="border: 0px solid #000; height: 500px; width: 500px;">
+						</div>
+					</div>
+				</div>
+				<div class = "col-md-4"></div>
+			</div>
+		</div>
 		
-
 		<script type="text/javascript" language="JavaScript">
-			var app = angular.module('myApp', []);
-			app.controller('myCtrl', function($scope, $http) {
+			var pttApp = angular.module('pttApp', []);
+			pttApp.controller('listCtrl',function($scope){
+				$scope.init = function(){
+				  $scope.showTable = false;
+				  $scope.showWordCloud = true;
+				}
+				$scope.startWordCloud = function(){
+		          $scope.showTable = false;
+		          $scope.showWordCloud = true;
+		          console.log($scope.showWordCloud);
+		          console.log($scope.showTable);
+		        }
+		        $scope.startTable = function(){
+		          $scope.showWordCloud = false;
+		          $scope.showTable = true;
+		          console.log($scope.showWordCloud);
+		          console.log($scope.showTable);
+		        }
+			});
+			pttApp.controller('myCtrl', function($scope, $http) {
 			    $http.get("http://localhost:3000/pttStat")
 			    .then(function(response) {
 			    	//console.log(response.data);
@@ -30,6 +83,20 @@
 			        startRender(data);
 			    });
 			});
+		</script>
+		
+
+		<script type="text/javascript" language="JavaScript">
+			/*var app = angular.module('myApp', []);
+			app.controller('myCtrl', function($scope, $http) {
+			    $http.get("http://localhost:3000/pttStat")
+			    .then(function(response) {
+			    	//console.log(response.data);
+			        var data = response.data
+			        console.log(data)
+			        startRender(data);
+			    });
+			});*/
 			
 			
 			/*var data = [
@@ -69,7 +136,7 @@
 			  var fill = d3.scale.category20();
 			  //要顯示於標籤雲的資料內容，為一個JSON物件的陣列
 			  
-			  d3.layout.cloud().size([ 500, 500 ]).words(data).padding(3).rotate(
+			  d3.layout.cloud().size([ 500, 500 ]).words(data).padding(0).rotate(
 			      0).font('"微軟正黑體",Impact').fontSize(function(d) {
 			    return d.number;
 			  }).on("end", draw).start();

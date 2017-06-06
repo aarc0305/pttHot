@@ -15,7 +15,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 
-mongoose.connect('db:27017/ptt')
+mongoose.connect('localhost:27017/ptt')
 
 
 // uncomment after placing your favicon in /public
