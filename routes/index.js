@@ -8,7 +8,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/ptt', function(req, res, next) {
-  res.render('ptt', { title: 'Express' });
+    pttStat.find({}).sort({number: -1}).limit(10).exec(function(err, stats) {
+		res.render('ptt', { stats: stats });
+	});
 });
 
 router.get('/pttStat',function(req,res,next){
@@ -18,9 +20,8 @@ router.get('/pttStat',function(req,res,next){
 });
 
 router.get('/pttFirstTen',function(req,res,next){
-	pttStat.find({}).sort({number: -1}).limit(10).exec(function(err, obj) {
-		res.json(obj);
-		//console.log(obj);
+	pttStat.find({}).sort({number: -1}).limit(10).exec(function(err, stats) {
+		res.json(stats);
 	});
 });
 

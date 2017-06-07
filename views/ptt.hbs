@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<script type="text/javascript" src="/javascripts/d3.js"></script>
 		<script type="text/javascript" src="/javascripts/d3.layout.cloud.js"></script>
@@ -34,9 +33,9 @@
 				<div class="col-sm-6">
 				  <h2>五月份趨勢</h2>
 				  <ul class="list-group">
-				    <li class="list-group-item">New <span class="badge">12</span></li>
-				    <li class="list-group-item">Deleted <span class="badge">5</span></li>
-				    <li class="list-group-item">Warnings <span class="badge">3</span></li>
+				  	{{# each stats}}
+				  		<li class="list-group-item">{{this.word}} <span class="badge">{{this.number}}</span></li>
+				  	{{/each}}
 				  </ul> 
 				</div>
 				<div class="col-sm-3"></div>
@@ -64,14 +63,10 @@
 				$scope.startWordCloud = function(){
 		          $scope.showTable = false;
 		          $scope.showWordCloud = true;
-		          console.log($scope.showWordCloud);
-		          console.log($scope.showTable);
 		        }
 		        $scope.startTable = function(){
 		          $scope.showWordCloud = false;
 		          $scope.showTable = true;
-		          console.log($scope.showWordCloud);
-		          console.log($scope.showTable);
 		        }
 			});
 			pttApp.controller('myCtrl', function($scope, $http) {
@@ -151,8 +146,6 @@
 			    });
 			  }
 			}
-
-			
 		</script>
 	</body>
 </html>
