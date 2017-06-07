@@ -17,10 +17,17 @@ router.get('/pttStat',function(req,res,next){
 	});
 });
 
+router.get('/pttFirstTen',function(req,res,next){
+	pttStat.find({}).sort({number: -1}).limit(10).exec(function(err, obj) {
+		res.json(obj);
+		//console.log(obj);
+	});
+});
+
 router.get('/postOne',function(res,res,next){
 	var newStat = new pttStat();
 	newStat.word = 'helloPtt';
-	newStat.number = 12;
+	newStat.number = 11;
 	newStat.save(function(err,stat){
 	    if(err){
 	      console.log('無法存入');
