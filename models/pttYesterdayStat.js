@@ -10,4 +10,4 @@ var pttStatSchema = new Schema({
 	},
 });
 
-module.exports=mongoose.model('PttTodayStat',pttStatSchema);
+module.exports=mongoose.model('PttYesterdayStat',pttStatSchema);

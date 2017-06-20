@@ -18,38 +18,47 @@
 		  </ul>
 		</div>
 		</nav>
-		<div class="container">
+		
 		<div class="container">
 			<div class="jumbotron" style="height:300px">
-			  <h1>PTT趨勢</h1>
+			  <h1>PTT視角</h1>
 			  <br>      
-			  <button type="button" class="btn btn-primary" ng-click="startWordCloud()">文字雲模式</button>
 			  <button type="button" class="btn btn-primary" ng-click="startTable()">表格模式</button>
+			  <button type="button" class="btn btn-primary" ng-click="startWordCloud()">文字雲模式</button>
 			</div>
 		</div>
 		<div class="container" >
 			<div class="container" ng-show="showTable">
-				<div class="col-sm-3"></div>
-				<div class="col-sm-6">
-				  <h2>五月份趨勢</h2>
+				<div class="col-sm-1"></div>
+				<div class="col-sm-4">
+				  <h2>今日趨勢</h2>
 				  <ul class="list-group">
-				  	{{# each stats}}
+				  	{{# each dayStats}}
 				  		<li class="list-group-item">{{this.word}} <span class="badge">{{this.number}}</span></li>
 				  	{{/each}}
 				  </ul> 
 				</div>
-				<div class="col-sm-3"></div>
+				<div class="col-sm-2"></div>
+				<div class="col-sm-4">
+				  <h2>昨日趨勢</h2>
+				  <ul class="list-group">
+				  	{{# each yesStats}}
+				  		<li class="list-group-item">{{this.word}} <span class="badge">{{this.number}}</span></li>
+				  	{{/each}}
+				  </ul> 
+				</div>
+				<div class="col-sm-1"></div>
 			</div>
 		    <div class="container" ng-show="showWordCloud">
-				<div class = "col-md-4"></div>
-				<div class = "col-md-4">
+				<div class = "col-md-2"></div>
+				<div class = "col-md-8">
 					<div ng-controller="myCtrl">
-						<h2>五月份趨勢</h2>
-						<div id="tag" style="border: 0px solid #000; height: 500px; width: 500px;">
+						<h2>今日趨勢</h2>
+						<div id="tag">
 						</div>
 					</div>
 				</div>
-				<div class = "col-md-4"></div>
+				<div class = "col-md-2"></div>
 			</div>
 		</div>
 		
@@ -57,8 +66,8 @@
 			var pttApp = angular.module('pttApp', []);
 			pttApp.controller('listCtrl',function($scope){
 				$scope.init = function(){
-				  $scope.showTable = false;
-				  $scope.showWordCloud = true;
+				  $scope.showTable = true;
+				  $scope.showWordCloud = false;
 				}
 				$scope.startWordCloud = function(){
 		          $scope.showTable = false;
@@ -82,55 +91,22 @@
 		
 
 		<script type="text/javascript" language="JavaScript">
-			/*var data = [
-		      {
-		        text : "透視C語言",
-		        size : 37,
-		        url : 'http://www.tenlong.com.tw/items/9862769408?item_id=886353'
-		      },
-		      {
-		        text : "超圖解 Arduino",
-		        size : 35,
-		        url : 'http://www.tenlong.com.tw/items/9863120847?item_id=577739'
-		      },
-		      {
-		        text : "Linux Shell 程式設計",
-		        size : 25,
-		        url : 'http://www.tenlong.com.tw/items/986276970X?item_id=887065'
-		      },
-		      {
-		        text : "無瑕的程式碼",
-		        size : 40,
-		        url : 'http://www.tenlong.com.tw/items/PG-001?item_id=884070'
-		      },
-		      {
-		        text : "挑戰大數據",
-		        size : 23,
-		        url : 'http://www.tenlong.com.tw/items/9865764040?item_id=883951'
-		      },
-		      {
-		        text : "Android 大螢幕手機",
-		        size : 23,
-		        url : 'http://www.tenlong.com.tw/items/9862018143?item_id=887255'
-		      } 
-		    ];*/
-		    
 		    function startRender(data) {
 			  var fill = d3.scale.category20();
 			  //要顯示於標籤雲的資料內容，為一個JSON物件的陣列
 			  
-			  d3.layout.cloud().size([ 500, 500 ]).words(data).padding(0).rotate(
+			  d3.layout.cloud().size([ 700, 700 ]).words(data).padding(0).rotate(
 			      0).font('"微軟正黑體",Impact').fontSize(function(d) {
 			    return d.number;
 			  }).on("end", draw).start();
 	 
 			  function draw(words) {
 			    d3.select("#tag") //要插入標籤雲的tag id
-			    .append("svg").attr("width", 500).attr("height", 500)
-			    .append("g").attr("transform", "translate(250,250)") //這裡的值要對應到繪圖區域的寬、高的一半，針對不同的瀏覽器要設可以使用的值，如Chrome為-webkit-transform
+			    .append("svg").attr("width", 700).attr("height", 700)
+			    .append("g").attr("transform", "translate(350,150)") //這裡的值要對應到繪圖區域的寬、高的一半，針對不同的瀏覽器要設可以使用的值，如Chrome為-webkit-transform
 			    .selectAll("text").data(words).enter().append("text")
 			    .style("font-size", function(d) {
-			          return d.number*3 + "px";
+			          return d.number*2 + "px";
 			        })
 			    .style("font-family", '"微軟正黑體",Impact')
 			    .style("cursor", 'pointer')//當滑鼠移上去時，變換cursor 變成一隻手

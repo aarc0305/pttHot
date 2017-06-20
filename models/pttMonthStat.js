@@ -1,7 +1,7 @@
 var mongoose=require('mongoose');
 var Schema=mongoose.Schema;
 
-var pttStatSchema = new Schema({
+var pttMonthStatSchema = new Schema({
 	word:{
 		type:String
 	},
@@ -10,4 +10,4 @@ var pttStatSchema = new Schema({
 	},
 });
 
-module.exports=mongoose.model('PttTodayStat',pttStatSchema);
+module.exports=mongoose.model('PttMonthStat',pttMonthStatSchema);
